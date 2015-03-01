@@ -23,7 +23,7 @@
  * limitations under the License.
  * =========================================================
  */
- (function($)){
+ (function($){
  $.fn.annytimepicker=function(options)
  {
   var settings = $.extend({
