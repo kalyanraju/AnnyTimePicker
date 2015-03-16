@@ -41,43 +41,54 @@
 	var AnnyContainer="<div class='AnnytpContainer'>"+HoursDD+MinsDD+ampmDD+"</div>";
 	$(AnnyContainer).insertAfter(this);
 	initialize(this);
+
+	var TimeValue = $(this).val();
+	if(TimeValue != ""){
+		var timeValues = TimeValue.split(":");
+		var hours = Number(timeValues[0]);
+		var minutes = Number(timeValues[1]);
+		var ampm = hours >= 12 ? 'PM' : 'AM';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0'+minutes : minutes;
+		hours = pad(hours,2);
+		$("."+hrclassname).val(hours);
+		$('.'+minclassname).val(minutes);
+		$('.'+ampmclassname).val(ampm);
+	}
+
  }
- function initialize(ele){
- 	var eleid=ele.attr("id");
-  $('.Annytphour_'+eleid).on('change', function(){updateInput(ele)});
-  $('.Annytpminute_'+eleid).on('change', function(){updateInput(ele)});
-  $('.Annytpampm_'+eleid).on('change', function(){updateInput(ele)});
-  }
+
+function initialize(ele){
+	var eleid=ele.attr("id");
+	$('.Annytphour_'+eleid).on('change', function(){updateInput(ele)});
+	$('.Annytpminute_'+eleid).on('change', function(){updateInput(ele)});
+	$('.Annytpampm_'+eleid).on('change', function(){updateInput(ele)});
+}
  
 var updateInput=function(ele){
-var eleid=ele.attr("id");
-$h=$('.Annytphour_'+eleid).val();
-$m=$('.Annytpminute_'+eleid).val();
-if($m == "")
-	$m = "00";
-$ap=$('.Annytpampm_'+eleid).val();
-var h = Number($h);
-if($ap == "PM"){
-	if(h == 12)
-	{
-	}else {
-		h = h + 12;
+	var eleid=ele.attr("id");
+	$h=$('.Annytphour_'+eleid).val();
+	$m=$('.Annytpminute_'+eleid).val();
+	if($m == "")
+		$m = "00";
+	$ap=$('.Annytpampm_'+eleid).val();
+	var h = Number($h);
+	if($ap == "PM"){
+		if(h == 12){
+			//condition
+		}else {
+			h = h + 12;
+		}
+	} else{
+		if(h == 12){
+			h = 00;
+		}
 	}
-} else{
-	if(h == 12)
-	{
-		h = 00;
-	}
+	h = pad(h,2);
+	$ftime=h+':'+$m+':00';
+	ele.val($ftime);
 }
-
-h = pad(h,2);
-$ftime=h+':'+$m+':00';
-ele.val($ftime);
-
-}
-
-// console.log($("#inp1"));
-// console.log($("#inp2"));
 
 }(jQuery));
 
